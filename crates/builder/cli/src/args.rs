@@ -254,7 +254,18 @@ mod tests {
         assert_eq!(config.block_time, Duration::from_millis(1000));
         assert!(config.max_gas_per_txn.is_none());
     }
+#[test]
+fn zero_flashblocks_block_time_is_rejected() {
+    use clap::Parser;
 
+    let result = Args::try_parse_from([
+        "builder",
+        "--flashblocks.block-time",
+        "0",
+    ]);
+
+    assert!(result.is_err());
+}
     #[rstest]
     #[case::block_time_1s(1000, 1000)]
     #[case::block_time_2s(2000, 2000)]
