@@ -25,8 +25,13 @@ pub struct FlashblocksArgs {
     pub flashblocks_addr: String,
 
     /// flashblock block time in milliseconds
-    #[arg(long = "flashblocks.block-time", default_value = "250", env = "FLASHBLOCK_BLOCK_TIME")]
-    pub flashblocks_block_time: u64,
+#[arg(
+    long = "flashblocks.block-time",
+    default_value = "250",
+    env = "FLASHBLOCK_BLOCK_TIME",
+    value_parser = clap::value_parser!(u64).range(1..)
+)]
+pub flashblocks_block_time: u64,
 
     /// Time by which blocks would be completed earlier in milliseconds.
     ///
